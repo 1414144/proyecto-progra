@@ -1,4 +1,5 @@
 from ast import Try
+from email import message
 from http.client import FORBIDDEN
 from lzma import FORMAT_ALONE
 from sqlite3 import Cursor
@@ -121,23 +122,14 @@ def login():
         cur.execute("select * from registro")
         datos=cur.fetchall()
         for columna in datos:
-            if columna[3] == txt_usuario1:
-                messagebox.showinfo(message="Registro exitoso",title="aviso")
-        cur.close()
-        
-       # bd=mysql.connector.connect(host="localhost",port="3306",user="root",password="",database="base_de_datos")
+            if columna[4]==txt_contraseña1:
+                txt_usuario1.delete(0,END)
+                txt_contraseña1.delete(0,END)
+                messagebox.showinfo(message="registro valido",title="info")
+            if  columna[5]!=txt_usuario1:
+                messagebox.showinfo(message="registro invalido",title="info")
 
-        #fcursor=bd.cursor()
-
-        #sql="insert into registro (usuario,contrasena)Values('{3}','{4}')".format(txt_usuario,txt_contraseña)
-        #try: 
-            #fcursor.execute(sql)
-            #conexion.commit()
-            #messagebox.showinfo(message="Registro exitoso",title="aviso")
-        #except:
-            #bd.rollback()
-            #messagebox.showinfo(message="Registro invalido",title="aviso")
-        #bd.close
+              
 #-----------------------------------------------------------------------------------        
     j = Tk()
     j.title('Registro')
@@ -149,7 +141,7 @@ def login():
     etiquetas_contraseña = Label (j,font=('century',18,'bold'),text='Contrasena',bg='#B4C7E7',width=20,height=1,bd=5,fg="#000000").place(x=1,y=150)
     #----------------------------txt login-------------------------------------------------------------------------------------------
     txt_usuario1 = Entry(j,font=('century',18,'bold'),width=20,bg="#D0CECE").place(x=240,y=50)
-    txt_contraseña1 = Entry(j,font=('century',18,'bold'),width=20,bg="#D0CECE").place(x=250,y=150)
+    txt_contraseña1 = Entry(j,font=('century',18,'bold'),width=20,bg="#D0CECE",show='*').place(x=250,y=150)
     #----------------------------------------------------------------------
     boton_inventario = Button(j,font=("arial",12,"bold"),width=20,height=2,bg="#0077AC",text="ingresar sistema",command=ingresar_sisitema).place(x=530,y=45)
     boton_inventario = Button(j,font=("arial",12,"bold"),width=20,height=2,bg="#0077AC",text="cancelar",).place(x=540,y=145)
