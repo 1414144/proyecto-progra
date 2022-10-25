@@ -128,6 +128,8 @@ def login():
                 messagebox.showinfo(message="registro valido",title="info")
             if  columna[5]!=txt_usuario1:
                 messagebox.showinfo(message="registro invalido",title="info")
+                else columna[4]!=txt_contraseña1:
+                    messagebox.showinfo(message="errror",title="infor")
 
               
 #-----------------------------------------------------------------------------------        
