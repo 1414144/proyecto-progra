@@ -1,9 +1,3 @@
-from ast import Try
-from email import message
-from http.client import FORBIDDEN
-from logging import root
-from lzma import FORMAT_ALONE
-from sqlite3 import Cursor
 from tkinter import *
 from unittest import result
 import mysql.connector 
@@ -97,22 +91,23 @@ def registro():
     inv.resizable(0,0)
 #---------------------------------------------------------------------------------------------------    
     etiqueta=Label(inv,font=("arial",18,"bold"),text="registro",bg="#B4C7E7",).place(x=125,y=5)
-    etiqueta=Label(inv,font=("arial",18,"bold"),text="identificacion",bg="#B4C7E7",).place(x=15,y=50)
-    txt_identificacion=Entry(inv,font=("arial",18,"bold"),bg="#FFFFFF")
+    etiqueta=Label(inv,font=("arial",18,"bold"),text="identificacion",bg="#B4C7E7",).place(x=15,y=50)    
+    txt_identificacion=Entry(inv,font=("arial",18,"bold"),bg="#D0CECE")
     txt_identificacion.place(x=200,y=50)
     txt_identificacion.bind("<Return>",(lambda event:buscar_usuario()))
     etiqueta=Label(inv,font=("arial",18,"bold"),text="nombre",bg="#B4C7E7",).place(x=15,y=100)
-    txt_nombre=Entry(inv,font=("arial",18,"bold"),bg="#FFFFFF")
+    txt_nombre=Entry(inv,font=("arial",18,"bold"),bg="#D0CECE")
     txt_nombre.place(x=200,y=100)
     etiqueuta=Label(inv,font=("arial",18,"bold"),text="trabajo",bg="#B4C7E7",).place(x=15,y=150)
-    txt_trabajo=Entry(inv,font=("arial",18,"bold"),bg="#FFFFFF")
+    txt_trabajo=Entry(inv,font=("arial",18,"bold"),bg="#D0CECE")
     txt_trabajo.place(x=200,y=150)
     etiqueta=Label(inv,font=("arial",18,"bold"),text="usuario",bg="#B4C7E7",).place(x=15,y=200)
-    txt_usuario=Entry(inv,font=("arial",18,"bold"),bg="#FFFFFF")
+    txt_usuario=Entry(inv,font=("arial",18,"bold"),bg="#D0CECE")
     txt_usuario.place(x=200,y=200)
     etiqueta=Label(inv,font=("arial",18,"bold"),text="contrasena",bg="#B4C7E7",).place(x=15,y=250)
-    txt_contraseña=Entry(inv,font=("arial",18,"bold"),bg="#FFFFFF")
+    txt_contraseña=Entry(inv,font=("arial",18,"bold"),bg="#D0CECE")
     txt_contraseña.place(x=200,y=250)
+#----------------------------------------------------------------------------------------------------------------    
     boton_inv2=Button(inv,font=("arial",10,"bold"),text="agregar usuario",width=15,bg="#0077CA",command=agregar_usuario).place(x=250,y=300)
     boton_inv3=Button(inv,font=("arial",10,"bold"),text="modificar usuario",width=15,bg="#0077CA",command=modificar_usuario).place(x=50,y=300)
     boton_inv4=Button(inv,font=("arial",10,"bold"),text="eliminar usuario",width=15,bg="#0077CA",command=eliminar_usuario).place(x=450,y=300)
@@ -140,7 +135,7 @@ def login():
       else:
         messagebox.showinfo("","incorrent Username and Password")
         return False
-      
+
     def cancelar():
         txt_usuario1.delete(0,END)
         txt_contraseña1.delete(0,END)
