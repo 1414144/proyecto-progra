@@ -130,6 +130,7 @@ def login():
       mycursor.execute(sql,[(usuario),(contrasena)])
       result = mycursor.fetchall()
 
+
       if result:
         messagebox.showinfo("","login success")
         root.destroy()
@@ -139,6 +140,12 @@ def login():
       else:
         messagebox.showinfo("","incorrent Username and Password")
         return False
+      
+    def cancelar():
+        txt_usuario1.delete(0,END)
+        txt_contraseña1.delete(0,END)
+
+
 #----------------------------ventana registro-------------------------------------------------------        
     j = Tk()
     j.title('Registro')
@@ -146,17 +153,19 @@ def login():
     j.resizable(0,0)
     j.config(bg='#B4C7E7')
 
-    global txt_contraseña1
-    global txt_usuario1
+    #global txt_contraseña1
+    #global txt_usuario1
     #-------------------etiquesta login-------------------------------------------------------------------------
     etiquetas_usuario = Label (j,font=('century',18,'bold'),text='Usuario',bg='#B4C7E7',width=20,height=1,bd=5,fg="#000000").place(x=10,y=45)
     etiquetas_contraseña = Label (j,font=('century',18,'bold'),text='Contrasena',bg='#B4C7E7',width=20,height=1,bd=5,fg="#000000").place(x=1,y=150)
     #----------------------------txt login-------------------------------------------------------------------------------------------
-    txt_usuario1 = Entry(j,font=('century',18,'bold'),width=20,bg="#D0CECE").place(x=240,y=50)
-    txt_contraseña1 = Entry(j,font=('century',18,'bold'),width=20,bg="#D0CECE",show='*').place(x=250,y=150)
+    txt_usuario1 = Entry(j,font=('century',18,'bold'),width=20,bg="#D0CECE")
+    txt_usuario1.place(x=240,y=50)
+    txt_contraseña1 = Entry(j,font=('century',18,'bold'),width=20,bg="#D0CECE",show='*')
+    txt_contraseña1.place(x=250,y=150)
     #----------------------------------------------------------------------
     boton_inventario = Button(j,font=("arial",12,"bold"),width=20,height=2,bg="#0077AC",text="ingresar sistema",command=ingresar_sisitema).place(x=530,y=45)
-    boton_inventario = Button(j,font=("arial",12,"bold"),width=20,height=2,bg="#0077AC",text="cancelar",).place(x=540,y=145)
+    boton_inventario = Button(j,font=("arial",12,"bold"),width=20,height=2,bg="#0077AC",text="cancelar",command=cancelar).place(x=540,y=145)
     #---------------------------ventana menu--------------------------------------------------
 
 etiqueta=Label(v,font=("century",24,"bold"),text="REGISTRO",bg="#B4C7E7").place(x=125,y=25)
