@@ -1,19 +1,22 @@
 from ast import Try
 from email import message
 from http.client import FORBIDDEN
+from logging import root
 from lzma import FORMAT_ALONE
 from sqlite3 import Cursor
 from tkinter import *
+from unittest import result
 import mysql.connector 
 from tkinter import ttk
 from tkinter import messagebox
+from subprocess import call
 
 v =Tk()
 v.title("Registro")
 v.geometry("500x400")
 v.config(bg="#B4C7E7")
 v.resizable(0,0)
-
+#---------------------------------------------------------------------------------------------------------
 conexion=mysql.connector.connect(host="localhost",port="3306",user="root",password="")
 bd=conexion.cursor()
 bd.execute("CREATE DATABASE IF NOT EXISTS base_de_datos")
@@ -24,7 +27,7 @@ bd=conexion.cursor()
 bd.execute("CREATE TABLE IF NOT EXISTS login(usuario VARCHAR(25),contrasena VARCHAR(55))")
 bd.execute("CREATE TABLE IF NOT EXISTS registro(identificacion VARCHAR(25),nombre_y_apellidos VARCHAR(55),puesto_de_trabajo VARCHAR(55),usuario VARCHAR(55),contrasena VARCHAR(55))")
 bd.close()
-
+#-----------------------------------------------------------------------------------------------------------------
 def registro():
     def agregar_usuario():
         cur=conexion.cursor()
@@ -86,13 +89,13 @@ def registro():
         cur.close()
         messagebox.showinfo(message="El usuario se modifico con exito", title="informacion al actualizar")
         limpiar()
-    
+#-------------------------------------------------------------------------------------------    
     inv = Tk()
     inv.title("usuario")
     inv.geometry("700x400")
     inv.config(bg="#B4C7E7")
     inv.resizable(0,0)
-    
+#---------------------------------------------------------------------------------------------------    
     etiqueta=Label(inv,font=("arial",18,"bold"),text="registro",bg="#B4C7E7",).place(x=125,y=5)
     etiqueta=Label(inv,font=("arial",18,"bold"),text="identificacion",bg="#B4C7E7",).place(x=15,y=50)
     txt_identificacion=Entry(inv,font=("arial",18,"bold"),bg="#FFFFFF")
@@ -115,29 +118,36 @@ def registro():
     boton_inv4=Button(inv,font=("arial",10,"bold"),text="eliminar usuario",width=15,bg="#0077CA",command=eliminar_usuario).place(x=450,y=300)
     boton_inv5=Button(inv,font=("arial",10,"bold"),text="buscar",width=15,bg="#0077CA",command=buscar_usuario).place(x=500,y=50)
     boton_inv6=Button(inv,font=("arial",10,"bold"),text="cancelar",width=15,bg="#0077CA",command=limpiar).place(x=400,y=350)
-#-------------------------------------------------------------------------------------------------    
+#--------------------------------------------funcion de ventana registro-----------------------------------------------------    
 def login():
     def ingresar_sisitema():
-        cur=conexion.cursor()
-        cur.execute("select * from registro")
-        datos=cur.fetchall()
-        for columna in datos:
-            if columna[4]==txt_contraseña1:
-                txt_usuario1.delete(0,END)
-                txt_contraseña1.delete(0,END)
-                messagebox.showinfo(message="registro valido",title="info")
-            if  columna[5]!=txt_usuario1:
-                messagebox.showinfo(message="registro invalido",title="info")
-                else columna[4]!=txt_contraseña1:
-                    messagebox.showinfo(message="errror",title="infor")
+      mysqlbd = mysql.connector.connect(host="localhost",user="root",password="",database="base_de_datos")
+      mycursor = mysqlbd.cursor()
+      usuario = txt_usuario1.get()
+      contrasena = txt_contraseña1.get()
 
-              
-#-----------------------------------------------------------------------------------        
+      sql = "select * from registro where usuario = %s and contrasena = %s"
+      mycursor.execute(sql,[(usuario),(contrasena)])
+      result = mycursor.fetchall()
+
+      if result:
+        messagebox.showinfo("","login success")
+        root.destroy()
+        call[("python","index.py")]
+        return True
+
+      else:
+        messagebox.showinfo("","incorrent Username and Password")
+        return False
+#----------------------------ventana registro-------------------------------------------------------        
     j = Tk()
     j.title('Registro')
     j.geometry('800x300')
     j.resizable(0,0)
     j.config(bg='#B4C7E7')
+
+    global txt_contraseña1
+    global txt_usuario1
     #-------------------etiquesta login-------------------------------------------------------------------------
     etiquetas_usuario = Label (j,font=('century',18,'bold'),text='Usuario',bg='#B4C7E7',width=20,height=1,bd=5,fg="#000000").place(x=10,y=45)
     etiquetas_contraseña = Label (j,font=('century',18,'bold'),text='Contrasena',bg='#B4C7E7',width=20,height=1,bd=5,fg="#000000").place(x=1,y=150)
@@ -158,5 +168,3 @@ boton_cli=Button(v,font=("century",12,"bold"),text="login", command=login,width=
 
 v.mainloop()
 
-#B4C7E7
-#0077CA
